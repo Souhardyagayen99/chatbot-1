@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Startup script for Gemini 2.0 Chatbot Web Application
+Startup script for Gemini 2.5 Pro Chatbot Web Application
 """
 
 import subprocess
@@ -30,7 +30,7 @@ def run_flask_app():
         print(f"❌ Error running Flask app: {e}")
 
 def main():
-    print("🤖 Gemini 2.0 Chatbot Web Application")
+    print("🤖 Gemini 2.5 Pro Chatbot Web Application")
     print("=" * 50)
     
     # Check if requirements are installed

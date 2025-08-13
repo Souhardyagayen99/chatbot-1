@@ -8,10 +8,10 @@ class Chatbot:
         genai.configure(api_key=GEMINI_API_KEY)
         
         # Initialize the model
-        self.model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        self.model = genai.GenerativeModel('gemini-1.5-pro')
         self.chat = self.model.start_chat(history=[])
         
-        print("🤖 Welcome to Gemini Chatbot!")
+        print("🤖 Welcome to Gemini 2.5 Pro Chatbot!")
         print("Type 'quit' or 'exit' to end the conversation.")
         print("-" * 50)
     

@@ -1,11 +1,11 @@
-# 🤖 Gemini 2.0 Chatbot Web Application
+# 🤖 Gemini 2.5 Pro Chatbot Web Application
 
-A modern, responsive web interface for your Gemini 2.0 AI chatbot powered by Google's latest AI model.
+A modern, responsive web interface for your Gemini 2.5 Pro AI chatbot powered by Google's latest AI model.
 
 ## ✨ Features
 
 - **Modern UI**: Beautiful, responsive design with gradient backgrounds and smooth animations
-- **Real-time Chat**: Instant responses from Gemini 2.0 Flash Experimental model
+- **Real-time Chat**: Instant responses from Gemini 2.5 Pro model
 - **Mobile Friendly**: Optimized for both desktop and mobile devices
 - **Typing Indicators**: Visual feedback when the AI is processing your request
 - **Error Handling**: Graceful error handling with user-friendly messages
@@ -152,4 +152,4 @@ Feel free to:
 
 ---
 
-**Enjoy chatting with Gemini 2.0! 🚀** 
+**Enjoy chatting with Gemini 2.5 Pro! 🚀** 

@@ -11,7 +11,7 @@ CORS(app)
 genai.configure(api_key=GEMINI_API_KEY)
 
 # Initialize the model
-model = genai.GenerativeModel('gemini-2.0-flash-exp')
+model = genai.GenerativeModel('gemini-1.5-pro')
 
 @app.route('/')
 def index():
@@ -42,10 +42,10 @@ def chat():
 
 @app.route('/api/health')
 def health():
-    return jsonify({'status': 'healthy', 'model': 'gemini-2.0-flash-exp'})
+    return jsonify({'status': 'healthy', 'model': 'gemini-1.5-pro'})
 
 if __name__ == '__main__':
-    print("🚀 Starting Gemini 2.0 Chatbot Web Server...")
+    print("🚀 Starting Gemini 2.5 Pro Chatbot Web Server...")
     print("📱 Open your browser and go to: http://localhost:5000")
     print("🔧 API endpoint: http://localhost:5000/api/chat")
     print("💚 Health check: http://localhost:5000/api/health")
