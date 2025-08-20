@@ -144,6 +144,25 @@
             align-items: flex-end;
         }
 
+        .attach-button {
+            background: white;
+            color: #333;
+            border: 2px solid #e9ecef;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .attach-button:hover {
+            transform: scale(1.05);
+        }
+
         .chat-input {
             flex: 1;
             border: 2px solid #e9ecef;
@@ -312,6 +331,8 @@
                     placeholder="Type your message here..."
                     rows="1"
                 ></textarea>
+                <input type="file" id="fileInput" style="display:none" accept="image/*,.txt,.md,.csv,.json" />
+                <button class="attach-button" id="attachButton" title="Attach a file">📎</button>
                 <button class="voice-button" id="voiceButton" title="Start voice input">🎤</button>
                 <button class="tts-button" id="ttsToggle" title="Auto-speak OFF">🔊</button>
                 <button class="send-button" id="sendButton" onclick="sendMessage()">
@@ -328,6 +349,10 @@
         const typingIndicator = document.getElementById('typingIndicator');
         const voiceButton = document.getElementById('voiceButton');
         const ttsToggle = document.getElementById('ttsToggle');
+        const attachButton = document.getElementById('attachButton');
+        const fileInput = document.getElementById('fileInput');
+
+        let selectedFile = null;
 
         // Voice input (SpeechRecognition) setup
         let recognition = null;
@@ -469,16 +494,25 @@
             typingIndicator.style.display = 'none';
         }
 
+        attachButton.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', () => {
+            selectedFile = fileInput.files && fileInput.files[0] ? fileInput.files[0] : null;
+            if (selectedFile) {
+                addMessage(`Attached file: ${selectedFile.name}`, true);
+            }
+        });
+
         async function sendMessage() {
             const message = chatInput.value.trim();
-            if (!message) return;
+            if (!message && !selectedFile) return;
             
             // Add user message
-            addMessage(message, true);
+            if (message) addMessage(message, true);
             
             // Clear input and reset height
             chatInput.value = '';
             chatInput.style.height = 'auto';
+            fileInput.value = '';
             
             // Disable input and button
             chatInput.disabled = true;
@@ -488,14 +522,23 @@
             showTyping();
             
             try {
-                // Call Flask backend API
-                const response = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ message: message })
-                });
+                // Prepare request based on whether a file is attached
+                let response;
+                if (selectedFile) {
+                    const form = new FormData();
+                    if (message) form.append('message', message);
+                    form.append('file', selectedFile);
+                    response = await fetch('/api/chat', {
+                        method: 'POST',
+                        body: form
+                    });
+                } else {
+                    response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message })
+                    });
+                }
                 
                 const data = await response.json();
                 
@@ -514,6 +557,7 @@
                 chatInput.disabled = false;
                 sendButton.disabled = false;
                 chatInput.focus();
+                selectedFile = null;
             }
         }
 
